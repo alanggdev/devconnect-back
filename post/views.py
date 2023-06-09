@@ -68,4 +68,4 @@ def get_user_posts(request, user_id, format=None):
     if len(posts) != 0:
         serializer = PostSerializer(posts, many=True, context={'request': request})
         return Response(custom_response("Success", serializer.data, status=status.HTTP_200_OK))
-    return Response(custom_response("Error", "Not found", status=status.HTTP_404_NOT_FOUND))
+    return Response(custom_response("Error", [], status=status.HTTP_404_NOT_FOUND))
