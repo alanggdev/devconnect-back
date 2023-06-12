@@ -7,5 +7,5 @@ class UserProfileModel(models.Model):
     user_avatar = models.ImageField(upload_to='profile/avatar/', null=True)
     user_description = models.TextField(null=True)
     user_status = models.CharField(max_length=25, null=True)
-    # user_followers = models.ManyToManyField(User, blank=True, related_name='followers')
-    # user_following = models.ManyToManyField(User, blank=True, related_name='following')
+    user_followers = models.ManyToManyField(User, blank=True, related_name='followers')
+    user_following = models.ManyToManyField(User, blank=True, related_name='following')
