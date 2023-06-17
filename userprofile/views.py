@@ -50,8 +50,6 @@ def update_userprofile(request, id, format=None):
     userprofile = search_userprofile(id)
     serializer = UserProfileSerializerModificate(userprofile, data=request.data)
     if serializer.is_valid():
-        # userprofile.user_avatar.delete(save=True)
-        # userprofile.user_backgroud.delete(save=True)
         serializer.save()
         return Response(custom_response("Updated", serializer.data, status=status.HTTP_200_OK))
     return Response(custom_response("Error", serializer.errors, status=status.HTTP_404_NOT_FOUND))

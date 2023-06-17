@@ -69,3 +69,21 @@ def get_user_posts(request, user_id, format=None):
         serializer = PostSerializer(posts, many=True, context={'request': request})
         return Response(custom_response("Success", serializer.data, status=status.HTTP_200_OK))
     return Response(custom_response("Error", [], status=status.HTTP_404_NOT_FOUND))
+
+@api_view(['GET'])
+def get_following_posts(request, *args, **kwargs):
+    user_follow_id = request.data['user_following']
+    if len(user_follow_id) > 0:
+        querysets = []
+        for userid in user_follow_id:
+            posts = PostModel.objects.filter(author=userid)
+            if len(posts) > 0:
+                querysets.append(posts)
+        lista = [post for queryset in querysets for post in queryset]
+        serialized_data = []
+        for item in lista:
+            serializer = PostSerializer(item, context={'request': request})
+            serialized_data.append(serializer.data)
+        return Response(custom_response("Success", serialized_data, status=status.HTTP_404_NOT_FOUND))
+    return Response(custom_response("No IDs provided", [], status=status.HTTP_404_NOT_FOUND))
+    

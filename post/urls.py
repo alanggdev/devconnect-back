@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import get_all_posts, create_post, get_detail_post, update_post, get_user_posts, delete_post
+from .views import get_all_posts, create_post, get_detail_post, update_post, get_user_posts, delete_post, get_following_posts
 
 urlpatterns = [
     path('list', get_all_posts, name='list-post'),
@@ -9,4 +9,5 @@ urlpatterns = [
     path('detail/<int:id>', get_detail_post, name='detail-post'),
     path('update/<int:id>', update_post, name='update-post'),
     path('user/<int:user_id>', get_user_posts, name='user-post'),
+    path('following', get_following_posts, name='follow-post'),
 ]
