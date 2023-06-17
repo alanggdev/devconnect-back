@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 import json
 
 from .models import UserProfileModel
-from .serializers import UserProfileSerializer
+from .serializers import UserProfileSerializer, UserProfileSerializerModificate
 
 def custom_response(msg, response, status):
     data ={
@@ -31,7 +31,7 @@ def get_all_userproiles(request):
 
 @api_view(['POST'])
 def create_userprofile(request, *args, **kwargs):
-    serializer = UserProfileSerializer(data=request.data)
+    serializer = UserProfileSerializerModificate(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(custom_response("Created", serializer.data, status=status.HTTP_201_CREATED))
@@ -48,7 +48,7 @@ def get_detail_userprofile(request, id, format=None):
 @api_view(['PATCH'])
 def update_userprofile(request, id, format=None):
     userprofile = search_userprofile(id)
-    serializer = UserProfileSerializer(userprofile, data=request.data)
+    serializer = UserProfileSerializerModificate(userprofile, data=request.data)
     if serializer.is_valid():
         # userprofile.user_avatar.delete(save=True)
         # userprofile.user_backgroud.delete(save=True)
@@ -58,8 +58,10 @@ def update_userprofile(request, id, format=None):
 
 @api_view(['GET'])
 def get_user_userprofile(request, user_id, format=None):
-    posts = UserProfileModel.objects.filter(user_profile=user_id)
-    if len(posts) != 0:
-        serializer = UserProfileSerializer(posts, many=True, context={'request': request})
-        return Response(custom_response("Success", serializer.data, status=status.HTTP_200_OK))
-    return Response(custom_response("Error", "Not found", status=status.HTTP_404_NOT_FOUND))
+    try:
+        userprofile = UserProfileModel.objects.get(user_profile=user_id)
+    except UserProfileModel.DoesNotExist:
+        return Response(custom_response("Error", "Not found", status=status.HTTP_404_NOT_FOUND))
+    
+    serializer = UserProfileSerializer(userprofile, context={'request': request})
+    return Response(custom_response("Success", serializer.data, status=status.HTTP_200_OK))
