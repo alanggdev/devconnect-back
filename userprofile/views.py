@@ -63,3 +63,13 @@ def get_user_userprofile(request, user_id, format=None):
     
     serializer = UserProfileSerializer(userprofile, context={'request': request})
     return Response(custom_response("Success", serializer.data, status=status.HTTP_200_OK))
+
+@api_view(['GET'])
+def get_user_userprofile_simple(request, user_id, format=None):
+    try:
+        userprofile = UserProfileModel.objects.get(user_profile=user_id)
+    except UserProfileModel.DoesNotExist:
+        return Response(custom_response("Error", "Not found", status=status.HTTP_404_NOT_FOUND))
+    
+    serializer = UserProfileSerializerModificate(userprofile, context={'request': request})
+    return Response(custom_response("Success", serializer.data, status=status.HTTP_200_OK))

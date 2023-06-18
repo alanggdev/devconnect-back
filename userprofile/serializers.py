@@ -26,7 +26,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         serializer = UserSerializer(follower_profiles, many=True).data
         for user in serializer:
             follower_profile = UserProfileModel.objects.get(user_profile=user['pk'])
-            print(follower_profile)
             follower_profile_data = UserProfileSerializerModificate(follower_profile).data
             user['profile'] = follower_profile_data['user_avatar']
         return serializer
