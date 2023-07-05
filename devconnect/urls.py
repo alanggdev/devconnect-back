@@ -25,5 +25,6 @@ urlpatterns = [
     path('userprofile/', include('userprofile.urls')),
     path('post/', include('post.urls')),
     path('comment/', include('comment.urls')),
+    path('files/', include('files.urls')),
     path('media/<path:path>/', serve, {'document_root': settings.MEDIA_ROOT}),
 ]

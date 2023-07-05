@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'userprofile',
     'post',
     'comment',
+    'files',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -62,14 +63,14 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES':(
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-    )
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES':(
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+#     )
+# }
 
 REST_AUTH = {
     'USE_JWT': True,
